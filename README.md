@@ -13,7 +13,8 @@ $ npm install spa-prerender --save-dev
 * `pages` \<Array> - list of URLs to parse.
 * `destination` \<string> - output directory.
 * `options` \<Object> - optional.
-  * pendingScripts \<Array> - list of script names to load before parse. You can also specify a part of the names (e.g. "bundle" for "bundle-1.js", "bundle-2.js", etc.).
+  * pendingScripts \<Array> - list of script names to load before parsing. You can also specify a part of the names (e.g. "bundle" for "bundle-1.js", "bundle-2.js", etc.).
+  * clearTags \<Array|false> - list of tags to remove before saving. Default: `['scripts']`.
   * renderTimeout \<int> - timeout for render page DOM before parsing. Default: 1000ms.
 
 ## Example
@@ -33,7 +34,8 @@ const pageUrls = [
 ];
 
 prerender(pageUrls, './prerendered', {
-    pendingScripts: ['core.js', 'front-office-2.js'], 
+    pendingScripts: ['core.js', 'front-office-2.js'],
+    clearTags: ['script', 'iframe'],
     renderTimeout: 2000
 });
 ```

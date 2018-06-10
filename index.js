@@ -37,11 +37,24 @@ const scriptsLoading = (pendingScripts, page) => Promise.all(
     }))
 );
 
+const tagsClearing = (clearTags, page) => {
+    if (!clearTags || !clearTags.length) return;
+
+    console.log(`[${page.url()}] clear tags: ${clearTags}`);
+
+    return page.evaluateHandle(tags => {
+            const elements = document.querySelectorAll(tags);
+            elements.forEach(el => el.remove());
+        }, clearTags.join()
+    );
+};
+
 module.exports = async (urls, dest, options = {}) => {
     const browser = await puppeteer.launch();
 
     const {
         pendingScripts = [],
+        clearTags = ['script'],
         renderTimeout = 1000
     } = options;
 
@@ -58,6 +71,8 @@ module.exports = async (urls, dest, options = {}) => {
         ]);
 
         await page.waitFor(renderTimeout);
+
+        await tagsClearing(clearTags, page);
 
         const html = await page.content();
 
