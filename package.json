@@ -1,0 +1,21 @@
+{
+  "name": "headless-spa-prerender",
+  "version": "0.1.0",
+  "description": "Pre-render single page application states.",
+  "main": "index.js",
+  "author": "Valerii Suntsov <vies@list.ru>",
+  "license": "MIT",
+  "keywords": [
+    "prerender",
+    "prerenderer",
+    "spa",
+    "ssr",
+    "serverside-rendering",
+    "angularjs-prerender",
+    "chrome-rdp"
+  ],
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "puppeteer": "^1.5.0"
+  }
+}
