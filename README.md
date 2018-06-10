@@ -3,7 +3,7 @@
 Pre-render single page application states and save as static HTML pages.
 
 ```bash
-$ npm install spa-prerender --save-dev
+$ npm install headless-spa-prerender --save-dev
 ```
 
 ## Synopsis
@@ -20,7 +20,7 @@ $ npm install spa-prerender --save-dev
 ## Example
 
 ```js
-const prerender = require('spa-prerender');
+const prerender = require('headless-spa-prerender');
 
 const host = 'https://promonavigator.co.id';
 
