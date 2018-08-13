@@ -1,6 +1,6 @@
 {
   "name": "headless-spa-prerender",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Pre-render single page application states.",
   "main": "index.js",
   "author": "Valerii Suntsov <vies@list.ru>",

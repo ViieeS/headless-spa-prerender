@@ -15,7 +15,7 @@ const scriptsLoading = (pendingScripts, page) => Promise.all(
     pendingScripts.map(script => new Promise((resolve, reject) => {
 
         const isPendingScript = (request) => (
-            request.resourceType() === 'script' &&
+            ['script', 'xhr'].includes(request.resourceType()) &&
             request.url().includes(script)
         );
 
