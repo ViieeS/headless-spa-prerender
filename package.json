@@ -1,7 +1,11 @@
 {
   "name": "headless-spa-prerender",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Pre-render single page application states.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ViieeS/headless-spa-prerender.git"
+  },
   "main": "index.js",
   "author": "Valerii Suntsov <vies@list.ru>",
   "license": "MIT",
