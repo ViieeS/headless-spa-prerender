@@ -11,31 +11,37 @@ const writeHtml = (path, data) => new Promise((resolve, reject) => {
 
 });
 
-const scriptsLoading = (pendingScripts, page) => Promise.all(
-    pendingScripts.map(script => new Promise((resolve, reject) => {
+const scriptsLoading = (pendingScripts, page) => {
+    if (pendingScripts.length) {
+        console.log(`[${page.url()}] waiting for scripts: "${pendingScripts}" ...`);
+    }
 
-        const isPendingScript = (request) => (
-            ['script', 'xhr'].includes(request.resourceType()) &&
-            request.url().includes(script)
-        );
+    return Promise.all(
+        pendingScripts.map(script => new Promise((resolve, reject) => {
 
-        page.on('response', response => {
-            const request = response.request()
+            const isPendingScript = (request) => (
+                ['script', 'xhr'].includes(request.resourceType()) &&
+                request.url().includes(script)
+            );
 
-            if (isPendingScript(request)) {
-                console.log(`[${page.url()}] ${request.url()} loaded.`);
-                resolve();
-            }
-        });
+            page.on('response', response => {
+                const request = response.request()
 
-        page.on('requestfailed', request => {
-            if (isPendingScript(request)) {
-                console.log(`[${page.url()}] Fail to load ${request.url()}.`);
-                reject();
-            }
-        })
-    }))
-);
+                if (isPendingScript(request)) {
+                    console.log(`[${page.url()}] ${request.url()} loaded.`);
+                    resolve();
+                }
+            });
+
+            page.on('requestfailed', request => {
+                if (isPendingScript(request)) {
+                    console.log(`[${page.url()}] Fail to load ${request.url()}.`);
+                    reject();
+                }
+            })
+        }))
+    );
+};
 
 const tagsClearing = (clearTags, page) => {
     if (!clearTags || !clearTags.length) return;
@@ -63,12 +69,12 @@ module.exports = async (urls, dest, options = {}) => {
 
         console.log(`[${url}] loading ...`);
 
-        console.log(`[${url}] waiting for scripts: "${pendingScripts}" ...`);
-
         await Promise.all([
             scriptsLoading(pendingScripts, page),
-            page.goto(url)
+            page.goto(url, {waitUntil: 'domcontentloaded'})
         ]);
+
+        console.log(`Waiting for the page to be rendered: ${renderTimeout} ...`);
 
         await page.waitFor(renderTimeout);
 
