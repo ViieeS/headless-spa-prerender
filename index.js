@@ -56,7 +56,7 @@ const tagsClearing = (clearTags, page) => {
 };
 
 module.exports = async (urls, dest, options = {}) => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ignoreHTTPSErrors: true});
 
     const {
         pendingScripts = [],
@@ -74,7 +74,7 @@ module.exports = async (urls, dest, options = {}) => {
             page.goto(url, {waitUntil: 'domcontentloaded'})
         ]);
 
-        console.log(`Waiting for the page to be rendered: ${renderTimeout} ...`);
+        console.log(`[${url}] waiting for rendering (${renderTimeout / 1000}s) ...`);
 
         await page.waitFor(renderTimeout);
 
